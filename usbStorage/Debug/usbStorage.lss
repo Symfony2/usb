@@ -1,0 +1,555 @@
+
+usbStorage.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001d4  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .stab         000006cc  00000000  00000000  00000228  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  2 .stabstr      00000091  00000000  00000000  000008f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_aranges 00000060  00000000  00000000  00000988  2**3
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 0000003d  00000000  00000000  000009e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000001cb  00000000  00000000  00000a25  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000000db  00000000  00000000  00000bf0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000020e  00000000  00000000  00000ccb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000040  00000000  00000000  00000edc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000000db  00000000  00000000  00000f1c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_pubtypes 00000024  00000000  00000000  00000ff7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	17 c0       	rjmp	.+46     	; 0x32 <__bad_interrupt>
+   4:	16 c0       	rjmp	.+44     	; 0x32 <__bad_interrupt>
+   6:	15 c0       	rjmp	.+42     	; 0x32 <__bad_interrupt>
+   8:	14 c0       	rjmp	.+40     	; 0x32 <__bad_interrupt>
+   a:	13 c0       	rjmp	.+38     	; 0x32 <__bad_interrupt>
+   c:	12 c0       	rjmp	.+36     	; 0x32 <__bad_interrupt>
+   e:	11 c0       	rjmp	.+34     	; 0x32 <__bad_interrupt>
+  10:	10 c0       	rjmp	.+32     	; 0x32 <__bad_interrupt>
+  12:	0f c0       	rjmp	.+30     	; 0x32 <__bad_interrupt>
+  14:	0e c0       	rjmp	.+28     	; 0x32 <__bad_interrupt>
+  16:	0d c0       	rjmp	.+26     	; 0x32 <__bad_interrupt>
+  18:	0c c0       	rjmp	.+24     	; 0x32 <__bad_interrupt>
+  1a:	0b c0       	rjmp	.+22     	; 0x32 <__bad_interrupt>
+  1c:	0a c0       	rjmp	.+20     	; 0x32 <__bad_interrupt>
+  1e:	09 c0       	rjmp	.+18     	; 0x32 <__bad_interrupt>
+  20:	08 c0       	rjmp	.+16     	; 0x32 <__bad_interrupt>
+  22:	07 c0       	rjmp	.+14     	; 0x32 <__bad_interrupt>
+  24:	06 c0       	rjmp	.+12     	; 0x32 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf ed       	ldi	r28, 0xDF	; 223
+  2c:	cd bf       	out	0x3d, r28	; 61
+  2e:	cb d0       	rcall	.+406    	; 0x1c6 <main>
+  30:	cf c0       	rjmp	.+414    	; 0x1d0 <_exit>
+
+00000032 <__bad_interrupt>:
+  32:	e6 cf       	rjmp	.-52     	; 0x0 <__vectors>
+
+00000034 <i2c_delay_T2>:
+;*************************************************************************
+	.stabs	"",100,0,0,i2c_delay_T2
+	.stabs	"i2cmaster.S",100,0,0,i2c_delay_T2
+	.func i2c_delay_T2	; delay 5.0 microsec with 4 Mhz crystal	
+i2c_delay_T2:        ; 4 cycles
+	rjmp 1f      ; 2   "
+  34:	00 c0       	rjmp	.+0      	; 0x36 <i2c_delay_T2+0x2>
+1:	rjmp 2f      ; 2   "
+  36:	00 c0       	rjmp	.+0      	; 0x38 <i2c_delay_T2+0x4>
+2:	rjmp 3f      ; 2   "
+  38:	00 c0       	rjmp	.+0      	; 0x3a <i2c_delay_T2+0x6>
+3:	rjmp 4f      ; 2   "
+  3a:	00 c0       	rjmp	.+0      	; 0x3c <i2c_delay_T2+0x8>
+4:	rjmp 5f      ; 2   "
+  3c:	00 c0       	rjmp	.+0      	; 0x3e <__SP_H__>
+5: 	rjmp 6f      ; 2   "
+  3e:	00 c0       	rjmp	.+0      	; 0x40 <__SREG__+0x1>
+6:	nop          ; 1   "
+  40:	00 00       	nop
+	ret          ; 3   "
+  42:	08 95       	ret
+
+00000044 <i2c_init>:
+; extern void i2c_init(void)
+;*************************************************************************
+	.global i2c_init
+	.func i2c_init
+i2c_init:
+	cbi SDA_DDR,SDA		;release SDA
+  44:	8c 98       	cbi	0x11, 4	; 17
+	cbi SCL_DDR,SCL		;release SCL
+  46:	8d 98       	cbi	0x11, 5	; 17
+	cbi SDA_OUT,SDA
+  48:	94 98       	cbi	0x12, 4	; 18
+	cbi SCL_OUT,SCL
+  4a:	95 98       	cbi	0x12, 5	; 18
+	ret
+  4c:	08 95       	ret
+
+0000004e <i2c_start>:
+;*************************************************************************
+
+	.global i2c_start
+	.func   i2c_start
+i2c_start:
+	sbi 	SDA_DDR,SDA	;force SDA low
+  4e:	8c 9a       	sbi	0x11, 4	; 17
+	rcall 	i2c_delay_T2	;delay T/2
+  50:	f1 df       	rcall	.-30     	; 0x34 <i2c_delay_T2>
+	
+	rcall 	i2c_write	;write address
+  52:	1d d0       	rcall	.+58     	; 0x8e <i2c_write>
+	ret
+  54:	08 95       	ret
+
+00000056 <i2c_rep_start>:
+;*************************************************************************
+
+	.global i2c_rep_start
+	.func	i2c_rep_start
+i2c_rep_start:
+	sbi	SCL_DDR,SCL	;force SCL low
+  56:	8d 9a       	sbi	0x11, 5	; 17
+	rcall 	i2c_delay_T2	;delay  T/2
+  58:	ed df       	rcall	.-38     	; 0x34 <i2c_delay_T2>
+	cbi	SDA_DDR,SDA	;release SDA
+  5a:	8c 98       	cbi	0x11, 4	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  5c:	eb df       	rcall	.-42     	; 0x34 <i2c_delay_T2>
+	cbi	SCL_DDR,SCL	;release SCL
+  5e:	8d 98       	cbi	0x11, 5	; 17
+	rcall 	i2c_delay_T2	;delay  T/2
+  60:	e9 df       	rcall	.-46     	; 0x34 <i2c_delay_T2>
+	sbi 	SDA_DDR,SDA	;force SDA low
+  62:	8c 9a       	sbi	0x11, 4	; 17
+	rcall 	i2c_delay_T2	;delay	T/2
+  64:	e7 df       	rcall	.-50     	; 0x34 <i2c_delay_T2>
+	
+	rcall	i2c_write	;write address
+  66:	13 d0       	rcall	.+38     	; 0x8e <i2c_write>
+	ret
+  68:	08 95       	ret
+
+0000006a <i2c_start_wait>:
+;*************************************************************************
+
+	.global i2c_start_wait
+	.func   i2c_start_wait
+i2c_start_wait:
+	mov	__tmp_reg__,r24
+  6a:	08 2e       	mov	r0, r24
+
+0000006c <i2c_start_wait1>:
+i2c_start_wait1:
+	sbi 	SDA_DDR,SDA	;force SDA low
+  6c:	8c 9a       	sbi	0x11, 4	; 17
+	rcall 	i2c_delay_T2	;delay T/2
+  6e:	e2 df       	rcall	.-60     	; 0x34 <i2c_delay_T2>
+	mov	r24,__tmp_reg__
+  70:	80 2d       	mov	r24, r0
+	rcall 	i2c_write	;write address
+  72:	0d d0       	rcall	.+26     	; 0x8e <i2c_write>
+	tst	r24		;if device not busy -> done
+  74:	88 23       	and	r24, r24
+	breq	i2c_start_wait_done
+  76:	11 f0       	breq	.+4      	; 0x7c <i2c_start_wait_done>
+	rcall	i2c_stop	;terminate write operation
+  78:	02 d0       	rcall	.+4      	; 0x7e <i2c_stop>
+	rjmp	i2c_start_wait1	;device busy, poll ack again
+  7a:	f8 cf       	rjmp	.-16     	; 0x6c <i2c_start_wait1>
+
+0000007c <i2c_start_wait_done>:
+i2c_start_wait_done:
+	ret
+  7c:	08 95       	ret
+
+0000007e <i2c_stop>:
+;*************************************************************************
+
+	.global	i2c_stop
+	.func	i2c_stop
+i2c_stop:
+	sbi	SCL_DDR,SCL	;force SCL low
+  7e:	8d 9a       	sbi	0x11, 5	; 17
+	sbi	SDA_DDR,SDA	;force SDA low
+  80:	8c 9a       	sbi	0x11, 4	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  82:	d8 df       	rcall	.-80     	; 0x34 <i2c_delay_T2>
+	cbi	SCL_DDR,SCL	;release SCL
+  84:	8d 98       	cbi	0x11, 5	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  86:	d6 df       	rcall	.-84     	; 0x34 <i2c_delay_T2>
+	cbi	SDA_DDR,SDA	;release SDA
+  88:	8c 98       	cbi	0x11, 4	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  8a:	d4 df       	rcall	.-88     	; 0x34 <i2c_delay_T2>
+	ret
+  8c:	08 95       	ret
+
+0000008e <i2c_write>:
+;	data = r24,  return = r25(=0):r24
+;*************************************************************************
+	.global i2c_write
+	.func	i2c_write
+i2c_write:
+	sec			;set carry flag
+  8e:	08 94       	sec
+	rol 	r24		;shift in carry and out bit one
+  90:	88 1f       	adc	r24, r24
+	rjmp	i2c_write_first
+  92:	01 c0       	rjmp	.+2      	; 0x96 <i2c_write_first>
+
+00000094 <i2c_write_bit>:
+i2c_write_bit:
+	lsl	r24		;if transmit register empty
+  94:	88 0f       	add	r24, r24
+
+00000096 <i2c_write_first>:
+i2c_write_first:
+	breq	i2c_get_ack
+  96:	59 f0       	breq	.+22     	; 0xae <i2c_get_ack>
+	sbi	SCL_DDR,SCL	;force SCL low
+  98:	8d 9a       	sbi	0x11, 5	; 17
+	brcc	i2c_write_low
+  9a:	18 f4       	brcc	.+6      	; 0xa2 <i2c_write_low>
+	nop
+  9c:	00 00       	nop
+	cbi	SDA_DDR,SDA	;release SDA
+  9e:	8c 98       	cbi	0x11, 4	; 17
+	rjmp	i2c_write_high
+  a0:	02 c0       	rjmp	.+4      	; 0xa6 <i2c_write_high>
+
+000000a2 <i2c_write_low>:
+i2c_write_low:
+	sbi	SDA_DDR,SDA	;force SDA low
+  a2:	8c 9a       	sbi	0x11, 4	; 17
+	rjmp	i2c_write_high
+  a4:	00 c0       	rjmp	.+0      	; 0xa6 <i2c_write_high>
+
+000000a6 <i2c_write_high>:
+i2c_write_high:
+	rcall 	i2c_delay_T2	;delay T/2
+  a6:	c6 df       	rcall	.-116    	; 0x34 <i2c_delay_T2>
+	cbi	SCL_DDR,SCL	;release SCL
+  a8:	8d 98       	cbi	0x11, 5	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  aa:	c4 df       	rcall	.-120    	; 0x34 <i2c_delay_T2>
+	rjmp	i2c_write_bit
+  ac:	f3 cf       	rjmp	.-26     	; 0x94 <i2c_write_bit>
+
+000000ae <i2c_get_ack>:
+	
+i2c_get_ack:
+	sbi	SCL_DDR,SCL	;force SCL low
+  ae:	8d 9a       	sbi	0x11, 5	; 17
+	cbi	SDA_DDR,SDA	;release SDA
+  b0:	8c 98       	cbi	0x11, 4	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  b2:	c0 df       	rcall	.-128    	; 0x34 <i2c_delay_T2>
+	cbi	SCL_DDR,SCL	;release SCL
+  b4:	8d 98       	cbi	0x11, 5	; 17
+
+000000b6 <i2c_ack_wait>:
+i2c_ack_wait:
+	sbis	SCL_IN,SCL	;wait SCL high (in case wait states are inserted)
+  b6:	85 9b       	sbis	0x10, 5	; 16
+	rjmp	i2c_ack_wait
+  b8:	fe cf       	rjmp	.-4      	; 0xb6 <i2c_ack_wait>
+	
+	clr	r24		;return 0
+  ba:	88 27       	eor	r24, r24
+	sbic	SDA_IN,SDA	;if SDA high -> return 1
+  bc:	84 99       	sbic	0x10, 4	; 16
+	ldi	r24,1
+  be:	81 e0       	ldi	r24, 0x01	; 1
+	rcall	i2c_delay_T2	;delay T/2
+  c0:	b9 df       	rcall	.-142    	; 0x34 <i2c_delay_T2>
+	clr	r25
+  c2:	99 27       	eor	r25, r25
+	ret
+  c4:	08 95       	ret
+
+000000c6 <i2c_readNak>:
+	.global i2c_readAck
+	.global i2c_readNak
+	.global i2c_read		
+	.func	i2c_read
+i2c_readNak:
+	clr	r24
+  c6:	88 27       	eor	r24, r24
+	rjmp	i2c_read
+  c8:	01 c0       	rjmp	.+2      	; 0xcc <i2c_read>
+
+000000ca <i2c_readAck>:
+i2c_readAck:
+	ldi	r24,0x01
+  ca:	81 e0       	ldi	r24, 0x01	; 1
+
+000000cc <i2c_read>:
+i2c_read:
+	ldi	r23,0x01	;data = 0x01
+  cc:	71 e0       	ldi	r23, 0x01	; 1
+
+000000ce <i2c_read_bit>:
+i2c_read_bit:
+	sbi	SCL_DDR,SCL	;force SCL low
+  ce:	8d 9a       	sbi	0x11, 5	; 17
+	cbi	SDA_DDR,SDA	;release SDA (from previous ACK)
+  d0:	8c 98       	cbi	0x11, 4	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  d2:	b0 df       	rcall	.-160    	; 0x34 <i2c_delay_T2>
+	
+	cbi	SCL_DDR,SCL	;release SCL
+  d4:	8d 98       	cbi	0x11, 5	; 17
+	rcall	i2c_delay_T2	;delay T/2
+  d6:	ae df       	rcall	.-164    	; 0x34 <i2c_delay_T2>
+
+000000d8 <i2c_read_stretch>:
+	
+i2c_read_stretch:
+    sbis SCL_IN, SCL        ;loop until SCL is high (allow slave to stretch SCL)
+  d8:	85 9b       	sbis	0x10, 5	; 16
+    rjmp	i2c_read_stretch
+  da:	fe cf       	rjmp	.-4      	; 0xd8 <i2c_read_stretch>
+    	
+	clc			;clear carry flag
+  dc:	88 94       	clc
+	sbic	SDA_IN,SDA	;if SDA is high
+  de:	84 99       	sbic	0x10, 4	; 16
+	sec			;  set carry flag
+  e0:	08 94       	sec
+	
+	rol	r23		;store bit
+  e2:	77 1f       	adc	r23, r23
+	brcc	i2c_read_bit	;while receive register not full
+  e4:	a0 f7       	brcc	.-24     	; 0xce <i2c_read_bit>
+
+000000e6 <i2c_put_ack>:
+	
+i2c_put_ack:
+	sbi	SCL_DDR,SCL	;force SCL low	
+  e6:	8d 9a       	sbi	0x11, 5	; 17
+	cpi	r24,1
+  e8:	81 30       	cpi	r24, 0x01	; 1
+	breq	i2c_put_ack_low	;if (ack=0)
+  ea:	11 f0       	breq	.+4      	; 0xf0 <i2c_put_ack_low>
+	cbi	SDA_DDR,SDA	;      release SDA
+  ec:	8c 98       	cbi	0x11, 4	; 17
+	rjmp	i2c_put_ack_high
+  ee:	01 c0       	rjmp	.+2      	; 0xf2 <i2c_put_ack_high>
+
+000000f0 <i2c_put_ack_low>:
+i2c_put_ack_low:                ;else
+	sbi	SDA_DDR,SDA	;      force SDA low
+  f0:	8c 9a       	sbi	0x11, 4	; 17
+
+000000f2 <i2c_put_ack_high>:
+i2c_put_ack_high:
+	rcall	i2c_delay_T2	;delay T/2
+  f2:	a0 df       	rcall	.-192    	; 0x34 <i2c_delay_T2>
+	cbi	SCL_DDR,SCL	;release SCL
+  f4:	8d 98       	cbi	0x11, 5	; 17
+
+000000f6 <i2c_put_ack_wait>:
+i2c_put_ack_wait:
+	sbis	SCL_IN,SCL	;wait SCL high
+  f6:	85 9b       	sbis	0x10, 5	; 16
+	rjmp	i2c_put_ack_wait
+  f8:	fe cf       	rjmp	.-4      	; 0xf6 <i2c_put_ack_wait>
+	rcall	i2c_delay_T2	;delay T/2
+  fa:	9c df       	rcall	.-200    	; 0x34 <i2c_delay_T2>
+	mov	r24,r23
+  fc:	87 2f       	mov	r24, r23
+	clr	r25
+  fe:	99 27       	eor	r25, r25
+	ret
+ 100:	08 95       	ret
+
+00000102 <writePage64>:
+#include "../i2cmaster/i2cmaster.h"
+
+
+
+
+char writePage64(unsigned char *dataArray){
+ 102:	df 93       	push	r29
+ 104:	cf 93       	push	r28
+ 106:	cd b7       	in	r28, 0x3d	; 61
+ 108:	de b7       	in	r29, 0x3e	; 62
+ 10a:	c9 50       	subi	r28, 0x09	; 9
+ 10c:	cd bf       	out	0x3d, r28	; 61
+ 10e:	99 87       	std	Y+9, r25	; 0x09
+ 110:	88 87       	std	Y+8, r24	; 0x08
+	
+	unsigned char i=0, ret = 0;
+ 112:	19 82       	std	Y+1, r1	; 0x01
+ 114:	1c 82       	std	Y+4, r1	; 0x04
+	unsigned int increment = 0;	
+ 116:	1b 82       	std	Y+3, r1	; 0x03
+ 118:	1a 82       	std	Y+2, r1	; 0x02
+	unsigned int arrayLenght = sizeof(dataArray);
+ 11a:	82 e0       	ldi	r24, 0x02	; 2
+ 11c:	90 e0       	ldi	r25, 0x00	; 0
+ 11e:	9e 83       	std	Y+6, r25	; 0x06
+ 120:	8d 83       	std	Y+5, r24	; 0x05
+	char iterationAmount = arrayLenght/64;
+ 122:	8d 81       	ldd	r24, Y+5	; 0x05
+ 124:	9e 81       	ldd	r25, Y+6	; 0x06
+ 126:	00 24       	eor	r0, r0
+ 128:	88 0f       	add	r24, r24
+ 12a:	99 1f       	adc	r25, r25
+ 12c:	00 1c       	adc	r0, r0
+ 12e:	88 0f       	add	r24, r24
+ 130:	99 1f       	adc	r25, r25
+ 132:	00 1c       	adc	r0, r0
+ 134:	89 2f       	mov	r24, r25
+ 136:	90 2d       	mov	r25, r0
+ 138:	8f 83       	std	Y+7, r24	; 0x07
+ 13a:	01 c0       	rjmp	.+2      	; 0x13e <writePage64+0x3c>
+				i2c_write(dataArray[increment]);
+			}
+			i2c_stop();
+		}
+		else{
+			goto metka;
+ 13c:	00 00       	nop
+	unsigned int increment = 0;	
+	unsigned int arrayLenght = sizeof(dataArray);
+	char iterationAmount = arrayLenght/64;
+	
+	metka:
+	i2c_init(); 
+ 13e:	82 df       	rcall	.-252    	; 0x44 <i2c_init>
+	for(i=0;i<iterationAmount;i++){
+ 140:	19 82       	std	Y+1, r1	; 0x01
+ 142:	38 c0       	rjmp	.+112    	; 0x1b4 <writePage64+0xb2>
+		ret = i2c_start(Dev24C02+I2C_WRITE);
+ 144:	80 ea       	ldi	r24, 0xA0	; 160
+ 146:	83 df       	rcall	.-250    	; 0x4e <i2c_start>
+ 148:	8c 83       	std	Y+4, r24	; 0x04
+	
+		if(ret!=0){
+ 14a:	8c 81       	ldd	r24, Y+4	; 0x04
+ 14c:	88 23       	and	r24, r24
+ 14e:	b1 f3       	breq	.-20     	; 0x13c <writePage64+0x3a>
+			i2c_write((i*64)>>8);   //HSB
+ 150:	89 81       	ldd	r24, Y+1	; 0x01
+ 152:	88 2f       	mov	r24, r24
+ 154:	90 e0       	ldi	r25, 0x00	; 0
+ 156:	00 24       	eor	r0, r0
+ 158:	96 95       	lsr	r25
+ 15a:	87 95       	ror	r24
+ 15c:	07 94       	ror	r0
+ 15e:	96 95       	lsr	r25
+ 160:	87 95       	ror	r24
+ 162:	07 94       	ror	r0
+ 164:	98 2f       	mov	r25, r24
+ 166:	80 2d       	mov	r24, r0
+ 168:	89 2f       	mov	r24, r25
+ 16a:	99 0f       	add	r25, r25
+ 16c:	99 0b       	sbc	r25, r25
+ 16e:	8f df       	rcall	.-226    	; 0x8e <i2c_write>
+			i2c_write(i*64);        //LSB
+ 170:	89 81       	ldd	r24, Y+1	; 0x01
+ 172:	82 95       	swap	r24
+ 174:	88 0f       	add	r24, r24
+ 176:	88 0f       	add	r24, r24
+ 178:	80 7c       	andi	r24, 0xC0	; 192
+ 17a:	89 df       	rcall	.-238    	; 0x8e <i2c_write>
+			
+			while(increment++<64){
+ 17c:	09 c0       	rjmp	.+18     	; 0x190 <writePage64+0x8e>
+				i2c_write(dataArray[increment]);
+ 17e:	28 85       	ldd	r18, Y+8	; 0x08
+ 180:	39 85       	ldd	r19, Y+9	; 0x09
+ 182:	8a 81       	ldd	r24, Y+2	; 0x02
+ 184:	9b 81       	ldd	r25, Y+3	; 0x03
+ 186:	82 0f       	add	r24, r18
+ 188:	93 1f       	adc	r25, r19
+ 18a:	fc 01       	movw	r30, r24
+ 18c:	80 81       	ld	r24, Z
+ 18e:	7f df       	rcall	.-258    	; 0x8e <i2c_write>
+	
+		if(ret!=0){
+			i2c_write((i*64)>>8);   //HSB
+			i2c_write(i*64);        //LSB
+			
+			while(increment++<64){
+ 190:	21 e0       	ldi	r18, 0x01	; 1
+ 192:	8a 81       	ldd	r24, Y+2	; 0x02
+ 194:	9b 81       	ldd	r25, Y+3	; 0x03
+ 196:	80 34       	cpi	r24, 0x40	; 64
+ 198:	91 05       	cpc	r25, r1
+ 19a:	08 f0       	brcs	.+2      	; 0x19e <writePage64+0x9c>
+ 19c:	20 e0       	ldi	r18, 0x00	; 0
+ 19e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 1a0:	9b 81       	ldd	r25, Y+3	; 0x03
+ 1a2:	01 96       	adiw	r24, 0x01	; 1
+ 1a4:	9b 83       	std	Y+3, r25	; 0x03
+ 1a6:	8a 83       	std	Y+2, r24	; 0x02
+ 1a8:	22 23       	and	r18, r18
+ 1aa:	49 f7       	brne	.-46     	; 0x17e <writePage64+0x7c>
+				i2c_write(dataArray[increment]);
+			}
+			i2c_stop();
+ 1ac:	68 df       	rcall	.-304    	; 0x7e <i2c_stop>
+	unsigned int arrayLenght = sizeof(dataArray);
+	char iterationAmount = arrayLenght/64;
+	
+	metka:
+	i2c_init(); 
+	for(i=0;i<iterationAmount;i++){
+ 1ae:	89 81       	ldd	r24, Y+1	; 0x01
+ 1b0:	8f 5f       	subi	r24, 0xFF	; 255
+ 1b2:	89 83       	std	Y+1, r24	; 0x01
+ 1b4:	99 81       	ldd	r25, Y+1	; 0x01
+ 1b6:	8f 81       	ldd	r24, Y+7	; 0x07
+ 1b8:	98 17       	cp	r25, r24
+ 1ba:	20 f2       	brcs	.-120    	; 0x144 <writePage64+0x42>
+		}
+		else{
+			goto metka;
+		}		
+	}
+ 1bc:	c7 5f       	subi	r28, 0xF7	; 247
+ 1be:	cd bf       	out	0x3d, r28	; 61
+ 1c0:	cf 91       	pop	r28
+ 1c2:	df 91       	pop	r29
+ 1c4:	08 95       	ret
+
+000001c6 <main>:
+#include <avr/io.h>
+#include "Memory/I2cMemory.h"
+
+
+int main(void)
+{
+ 1c6:	df 93       	push	r29
+ 1c8:	cf 93       	push	r28
+ 1ca:	cd b7       	in	r28, 0x3d	; 61
+ 1cc:	de b7       	in	r29, 0x3e	; 62
+    while(1)
+    {
+        //TODO:: Please write your application code 
+    }
+ 1ce:	ff cf       	rjmp	.-2      	; 0x1ce <main+0x8>
+
+000001d0 <_exit>:
+ 1d0:	f8 94       	cli
+
+000001d2 <__stop_program>:
+ 1d2:	ff cf       	rjmp	.-2      	; 0x1d2 <__stop_program>

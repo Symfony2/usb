@@ -9,9 +9,9 @@
 #ifndef I2CMEMORY_H_
 #define I2CMEMORY_H_
 
-#define Dev24C02  0xA0
 
-char writePage64(unsigned char *dataArray);
+
+void writePage64(unsigned char *dataArray);
 
 
 #endif /* I2CMEMORY_H_ */

@@ -6,19 +6,21 @@
  */ 
 #include "../Memory/I2cMemory.h"
 #include "../i2cmaster/i2cmaster.h"
+#define Dev24C02  0xA0
 
 
 
 
-char writePage64(unsigned char *dataArray){
+void writePage64(unsigned char *dataArray){
 	
-	unsigned char i=0, ret = 0;
+	/*unsigned int i=0;
+	unsigned char  ret = 0;
 	unsigned int increment = 0;	
 	unsigned int arrayLenght = sizeof(dataArray);
 	char iterationAmount = arrayLenght/64;
 	
 	metka:
-	i2c_init(); 
+	i2c_init();		
 	for(i=0;i<iterationAmount;i++){
 		ret = i2c_start(Dev24C02+I2C_WRITE);
 	
@@ -33,6 +35,14 @@ char writePage64(unsigned char *dataArray){
 		}
 		else{
 			goto metka;
-		}		
-	}
+		}		*/
+		i2c_init();                             // initialize I2C library
+
+		// write 0x75 to EEPROM address 5 (Byte Write) 
+		i2c_start_wait(Dev24C02+I2C_WRITE);     // set device address and write mode
+		
+		i2c_write(0x05);                        // write address = 5
+		i2c_write(0x75);                        // write value 0x75 to EEPROM
+		i2c_stop(); 
+	
 } 

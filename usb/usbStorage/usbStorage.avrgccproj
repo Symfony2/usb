@@ -93,6 +93,12 @@
     <Compile Include="Memory\I2cMemory.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="oddebug.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="oddebug.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="uart.c">
       <SubType>compile</SubType>
     </Compile>
@@ -103,6 +109,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UartTests\uart_test.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrv.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="usbdrvasm.S">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="usbStorage.c">
@@ -116,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="i2cmaster\group__pfleury__ic2master.html">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="usbdrvasm.asm">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>

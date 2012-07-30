@@ -6,14 +6,16 @@
  */ 
 #define F_CPU 12000000
 
+/*
 #define UART_RX_BUFFER_SIZE 8
-#define UART_TX_BUFFER_SIZE 8
+#define UART_TX_BUFFER_SIZE 8*/
 
 
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/eeprom.h>
+#include <avr/wdt.h>         // for wdt routines
 
 #include <avr/pgmspace.h>   /* нужно для usbdrv.h */
 
@@ -21,88 +23,196 @@
 #include "uart.h"
 #include "oddebug.h"        /* Этот также пример для использования макроса отладки */
 #include "at24cxxx.h"
+#include "Model/IOmodel.h"
+
+#include <util/delay.h>      // for _delay_ms()
+#include <avr/eeprom.h>      // memory
+
+volatile struct HostOrder{
+	unsigned char hostRequest;	
+}; 
+
+
+struct HostOrder hostOrder = {0};
+
 /* ------------------------------------------------------------------------- */
 /* ----------------------------- интерфейс USB ----------------------------- */
 /* ------------------------------------------------------------------------- */
 
-PROGMEM char usbHidReportDescriptor[22] = {    /* дескриптор репорта USB */
-    0x06, 0x00, 0xff,              // USAGE_PAGE (Generic Desktop)
-    0x09, 0x01,                    // USAGE (Vendor Usage 1)
-    0xa1, 0x01,                    // COLLECTION (Application)
-    0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
-    0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
-    0x75, 0x08,                    //   REPORT_SIZE (8)
-    0x95, 0x80,                    //   REPORT_COUNT (128)
-    0x09, 0x00,                    //   USAGE (Undefined)
-    0xb2, 0x02, 0x01,              //   FEATURE (Data,Var,Abs,Buf)
-    0xc0                           // END_COLLECTION
-};
+/* USB report descriptor */
+PROGMEM char usbHidReportDescriptor[] = {
+  0x06, 0xa0, 0xff, // USAGE_PAGE (Vendor Defined Page 1)
+  0x09, 0x01,       // USAGE (Vendor Usage 1)
+  0xa1, 0x01,       // COLLECTION (Application)
 
-/* Следующие переменные сохраняют состояние текущей передачи данных */
-static uchar    currentAddress;
-static uchar    bytesRemaining;
+  // Input Report
+  0x09, 0x02,       // Usage ID - vendor defined
+  0x15, 0x00,       // Logical Minimum (0)
+  0x26, 0xFF, 0x00, // Logical Maximum (255)
+  0x75, 0x08,       // Report Size (8 bits)
+  0x95, 0x08,       // Report Count (8 fields)
+  //0x95, 0x40,       // Report Count (8 fields)
+  0x81, 0x02,       // Input (Data, Variable, Absolute)
+
+  // Output report
+  0x09, 0x03,       // Usage ID - vendor defined
+  0x15, 0x00,       // Logical Minimum (0)
+  0x26, 0xFF, 0x00, // Logical Maximum (255)
+  0x75, 0x08,       // Report Size (8 bits)
+  0x95, 0x08,       // Report Count (8 fields)
+  //0x95, 0x40,       // Report Count (8 fields)
+  0x91, 0x02,       // Output (Data, Variable, Absolute)
+  
+  //Feature report
+  0x09, 0x04,       // Usage ID - vendor defined  
+  0x15, 0x00,       // Logical Minimum (0)
+  0x26, 0xFF, 0x00, // Logical Maximum (255)
+  0x75, 0x08,       // Report Size (8 bits)
+  0x95, 0x08,       // Report Count (8 fields)
+  0xb2, 0x02, 0x01, //   FEATURE (Data,Var,Abs,Buf)
+  
+
+  0xc0              // END_COLLECTION
+  };
+
+
+///****Global variables****///
+static uchar bytesRemaining;
+static uchar currentAddress;
+static uchar inbuf[8],local[8],frameRecived=0;
+static uchar ReportID,passBy;
+
+
+
+
+
+
+
 
 uchar   usbFunctionRead(uchar *data, uchar len)
 {
-    if(len > bytesRemaining)
+    uchar j=0;
+	if(len > bytesRemaining)
         len = bytesRemaining;
-    eeprom_read_block(data, (uchar *)0 + currentAddress, len);
+    
+	for(j=0; j<len; j++)
+        data[j] = local[j+currentAddress];
+	
+	data[1] = len;
     currentAddress += len;
     bytesRemaining -= len;
     return len;
 }
 
-/* usbFunctionWrite() вызывается, когда хост посылает кусок данных в устройство.
- *  Для большей информации см. документацию в usbdrv/usbdrv.h.
- */
-uchar   usbFunctionWrite(uchar *data, uchar len)
+uchar usbFunctionWrite (uchar *data, uchar len)
 {
-    if(bytesRemaining == 0)
-        return 1;               /* окончание передачи */
-    if(len > bytesRemaining)
-        len = bytesRemaining;
-    eeprom_write_block(data, (uchar *)0 + currentAddress, len);
-    currentAddress += len;
-    bytesRemaining -= len;
-    return bytesRemaining == 0; /* возврат 1, если это был последний кусок */
+  uchar i;
+  if (len > bytesRemaining) len = bytesRemaining;
+	  bytesRemaining -= len;
+  
+  if(ReportID & SET_FEATURE){	  
+    
+	  frameRecived = 1;  
+	  return bytesRemaining == 0;  // return 1 when done
+	  setFeatureReport(SET_FEATURE,readAllowExtEeprom);
+  }
+  else{
+	  makeNullArray(data,len,1);
+	  return bytesRemaining == 0;  // return 1 when done
+  }
 }
 
-/* ------------------------------------------------------------------------- */
 
-usbMsgLen_t usbFunctionSetup(uchar data[8])
+
+usbMsgLen_t usbFunctionSetup (uchar *data)
 {
-usbRequest_t    *rq = (void *)data;
 
-    if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS){    /* запрос HID class */
+  usbRequest_t    *rq = (void *)data;
+  uchar incr =0;  
+
+    if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS){    /* HID class request */
+
         if(rq->bRequest == USBRQ_HID_GET_REPORT){  /* wValue: ReportType (highbyte), ReportID (lowbyte) */
-            /* поскольку мы имеем только один тип репорта, мы можем игнорировать репорт-ID */
-            bytesRemaining = 128;
+            /* since we have only one report type, we can ignore the report-ID */
+            bytesRemaining = 0;			
             currentAddress = 0;
-            return USB_NO_MSG;  /* использование usbFunctionRead() для получения данных хостом от устройства */
+			
+			ReportID=rq->wValue.bytes[1]; // ReportID stored in data[2]
+			passBy = 1;
+			return USB_NO_MSG;
+
+            //return USB_NO_MSG;  /* use usbFunctionRead() to obtain data */
         }else if(rq->bRequest == USBRQ_HID_SET_REPORT){
-            /* поскольку мы имеем только один тип репорта, мы можем игнорировать репорт-ID */
-            bytesRemaining = 128;
-            currentAddress = 0;
-            return USB_NO_MSG;  /* use usbFunctionWrite() для получения данных устройством от хоста */
+			
+			ReportID=rq->wValue.bytes[1]; // ReportID stored in data[2]
+						
+			if(ReportID == SET_FEATURE){
+				
+				bytesRemaining = 8;
+				currentAddress = 0;			
+						
+				return USB_NO_MSG;			
+			}
+			else if(ReportID == SET_INPUT){
+				bytesRemaining = 64;
+				currentAddress = 0;			
+						
+				return USB_NO_MSG;	
+			}
+			
         }
     }else{
-        /* игнорируем запросы типа вендора, мы их все равно не используем */
+        /* ignore vendor type requests, we don't use any */
     }
     return 0;
 }
 
 /* ------------------------------------------------------------------------- */
 
-unsigned char transferData[] = {3,3,3,5,5,4,4,4};
+//unsigned char transferData[] = {1,1,1,1,1,3,3,1};
+
 
 
  int main(void)
  {
+	 DDRB = 0b00000011;
      unsigned char ret;
+	 timer1_init();
 	 twi_init();
+	 wdt_enable(WDTO_2S);
+
+    usbInit();
+	
+    usbDeviceDisconnect();  // принудительно отключаемся от хоста, так делать можно только при выключенных прерываниях!
+    
+    uchar i = 0;
+    while(--i){             // пауза > 250 ms
+		wdt_reset();
+        _delay_ms(1);
+    }
+    
+    usbDeviceConnect();   
+	 sei();
+	 //ee24cxxx_write_bytes(0,sizeof(transferData),transferData)	 ;
 	 
-	 ee24cxxx_write_bytes(0,sizeof(transferData),transferData)	 ;
-	 for(;;);
+	 ee24cxxx_read_bytes(0,8,local);
+	 
+	 
+	 
+	 for(;;){
+		wdt_reset();
+		usbPoll();
+		if(passBy){
+			while(!usbInterruptIsReady()){
+				wdt_reset();
+				usbPoll();			
+			}	
+			 
+			inbuf[0] = ReportID;
+			usbSetInterrupt(inbuf,sizeof(inbuf));			
+			passBy=0;
+		}			
+	 }		
  }
 /*
 unsigned char transferData[12] = {8,1,2,3,4,5,6,7,8};

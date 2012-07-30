@@ -93,6 +93,12 @@
     <Compile Include="Memory\I2cMemory.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Model\IOmodel.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Model\IOmodel.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="oddebug.c">
       <SubType>compile</SubType>
     </Compile>
@@ -127,6 +133,7 @@
   <ItemGroup>
     <Folder Include="i2cmaster\" />
     <Folder Include="Memory" />
+    <Folder Include="Model" />
     <Folder Include="UartTests" />
   </ItemGroup>
   <ItemGroup>

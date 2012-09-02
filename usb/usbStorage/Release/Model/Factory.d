@@ -1,4 +1,4 @@
-usbStorage.d usbStorage.o: .././usbStorage.c \
+Model/Factory.d Model/Factory.o: ../Model/Factory.c \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/io.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/sfr_defs.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/inttypes.h \
@@ -10,18 +10,7 @@ usbStorage.d usbStorage.o: .././usbStorage.c \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/version.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/fuse.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/lock.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/interrupt.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/eeprom.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stddef.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/wdt.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/pgmspace.h \
- .././GlobalVariables.h .././usbdrv.h .././usbconfig.h .././iarcompat.h \
- .././uart.h .././oddebug.h .././at24cxxx.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdlib.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/twi.h \
- .././Model/IOmodel.h .././Model/../GlobalVariables.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay.h \
- c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay_basic.h
+ ../Model/../Model/Factory.h ../Model/../Model/../GlobalVariables.h
 
 c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/io.h:
 
@@ -45,38 +34,6 @@ c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/av
 
 c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/lock.h:
 
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/interrupt.h:
+../Model/../Model/Factory.h:
 
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/eeprom.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/include/stddef.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/wdt.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/pgmspace.h:
-
-.././GlobalVariables.h:
-
-.././usbdrv.h:
-
-.././usbconfig.h:
-
-.././iarcompat.h:
-
-.././uart.h:
-
-.././oddebug.h:
-
-.././at24cxxx.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/stdlib.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/twi.h:
-
-.././Model/IOmodel.h:
-
-.././Model/../GlobalVariables.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay.h:
-
-c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/util/delay_basic.h:
+../Model/../Model/../GlobalVariables.h:

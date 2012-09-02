@@ -7,7 +7,7 @@ c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5
 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
                               c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o (exit)
 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
-                              Model/IOmodel.o (__do_copy_data)
+                              usbdrv.o (__do_copy_data)
 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
                               at24cxxx.o (__do_clear_bss)
 
@@ -20,6 +20,7 @@ usbTxStatus1        0xc               usbdrv.o
 usbDeviceAddr       0x1               usbdrv.o
 usbRxToken          0x1               usbdrv.o
 usbInputBufOffset   0x1               usbdrv.o
+HostSlaveIntr       0x49              Model/Factory.o
 usbMsgPtr           0x2               usbdrv.o
 usbRxLen            0x1               usbdrv.o
 usbNewDeviceAddr    0x1               usbdrv.o
@@ -44,6 +45,7 @@ LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/av
 LOAD at24cxxx.o
 LOAD i2cmaster/i2cmaster.o
 LOAD Memory/I2cMemory.o
+LOAD Model/Factory.o
 LOAD Model/IOmodel.o
 LOAD oddebug.o
 LOAD uart.o
@@ -145,7 +147,7 @@ LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/av
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xe2a
+.text           0x00000000     0x1152
  *(.vectors)
  .vectors       0x00000000       0x26 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
                 0x00000000                __vector_default
@@ -159,42 +161,42 @@ LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/av
                 0x00000036                usbDescriptorStringDevice
                 0x00000042                usbDescriptorDevice
                 0x00000054                usbDescriptorConfiguration
- .progmem.data  0x00000076       0x30 usbStorage.o
+ .progmem.data  0x00000076       0x22 usbStorage.o
                 0x00000076                usbDescriptorHidReport
-                0x000000a6                . = ALIGN (0x2)
-                0x000000a6                __trampolines_start = .
+                0x00000098                . = ALIGN (0x2)
+                0x00000098                __trampolines_start = .
  *(.trampolines)
- .trampolines   0x000000a6        0x0 linker stubs
+ .trampolines   0x00000098        0x0 linker stubs
  *(.trampolines*)
-                0x000000a6                __trampolines_end = .
+                0x00000098                __trampolines_end = .
  *(.jumptables)
  *(.jumptables*)
  *(.lowtext)
  *(.lowtext*)
-                0x000000a6                __ctors_start = .
+                0x00000098                __ctors_start = .
  *(.ctors)
-                0x000000a6                __ctors_end = .
-                0x000000a6                __dtors_start = .
+                0x00000098                __ctors_end = .
+                0x00000098                __dtors_start = .
  *(.dtors)
-                0x000000a6                __dtors_end = .
+                0x00000098                __dtors_end = .
  SORT(*)(.ctors)
  SORT(*)(.dtors)
  *(.init0)
- .init0         0x000000a6        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
-                0x000000a6                __init
+ .init0         0x00000098        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
+                0x00000098                __init
  *(.init0)
  *(.init1)
  *(.init1)
  *(.init2)
- .init2         0x000000a6        0xc c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
+ .init2         0x00000098        0xc c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
  *(.init2)
  *(.init3)
  *(.init3)
  *(.init4)
- .init4         0x000000b2       0x16 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
-                0x000000b2                __do_copy_data
- .init4         0x000000c8       0x10 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
-                0x000000c8                __do_clear_bss
+ .init4         0x000000a4       0x16 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
+                0x000000a4                __do_copy_data
+ .init4         0x000000ba       0x10 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
+                0x000000ba                __do_clear_bss
  *(.init4)
  *(.init5)
  *(.init5)
@@ -205,94 +207,102 @@ LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/av
  *(.init8)
  *(.init8)
  *(.init9)
- .init9         0x000000d8        0x4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
+ .init9         0x000000ca        0x4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
  *(.init9)
  *(.text)
- .text          0x000000dc        0x2 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
-                0x000000dc                __bad_interrupt
-                0x000000dc                __vector_6
-                0x000000dc                __vector_3
-                0x000000dc                __vector_13
-                0x000000dc                __vector_17
-                0x000000dc                __vector_7
-                0x000000dc                __vector_5
-                0x000000dc                __vector_4
-                0x000000dc                __vector_9
-                0x000000dc                __vector_2
-                0x000000dc                __vector_15
-                0x000000dc                __vector_14
-                0x000000dc                __vector_10
-                0x000000dc                __vector_16
-                0x000000dc                __vector_18
- .text          0x000000de      0x276 at24cxxx.o
-                0x000000de                twi_init
-                0x000000e6                ee24cxxx_write_page
-                0x000001d2                ee24cxxx_write_bytes
-                0x0000022c                ee24cxxx_read_bytes
- .text          0x00000354       0xce i2cmaster/i2cmaster.o
-                0x00000364                i2c_init
-                0x0000036e                i2c_start
-                0x00000376                i2c_rep_start
-                0x0000038a                i2c_start_wait
-                0x0000039e                i2c_stop
-                0x000003ae                i2c_write
-                0x000003e6                i2c_readNak
-                0x000003ea                i2c_readAck
-                0x000003ec                i2c_read
- .text          0x00000422       0x12 Memory/I2cMemory.o
-                0x00000422                writePage64
- .text          0x00000434      0x120 Model/IOmodel.o
-                0x00000434                timer1_init
-                0x00000446                __vector_8
-                0x0000046e                _doMath
-                0x000004aa                sequentialReadEeprom
-                0x00000538                setFeatureReport
-                0x00000552                makeNullArray
- .text          0x00000554        0x0 oddebug.o
- .text          0x00000554      0x17e uart.o
-                0x00000554                __vector_11
-                0x000005a6                __vector_12
-                0x000005f0                uart_init
-                0x00000618                uart_getc
-                0x0000064e                uart_putc
-                0x00000670                uart_puts
-                0x00000696                uart_puts_p
-                0x000006b0                uart_available
-                0x000006c8                uart_flush
- .text          0x000006d2        0x0 UartTests/UartBlock.o
- .text          0x000006d2      0x2ce usbdrv.o
-                0x000006d2                usbSetInterrupt
-                0x0000071e                usbPoll
-                0x00000986                usbInit
- .text          0x000009a0      0x2ea usbdrvasm.o
-                0x000009a0                usbCrc16
-                0x000009ca                usbCrc16Append
-                0x000009d2                __vector_1
- .text          0x00000c8a      0x14e usbStorage.o
-                0x00000c8a                usbFunctionRead
-                0x00000cd2                usbFunctionWrite
-                0x00000d12                usbFunctionSetup
-                0x00000d62                main
- .text          0x00000dd8        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
- .text          0x00000dd8        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
- .text          0x00000dd8        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
- .text          0x00000dd8        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
- .text          0x00000dd8        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
-                0x00000dd8                . = ALIGN (0x2)
+ .text          0x000000ce        0x2 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
+                0x000000ce                __bad_interrupt
+                0x000000ce                __vector_6
+                0x000000ce                __vector_3
+                0x000000ce                __vector_13
+                0x000000ce                __vector_17
+                0x000000ce                __vector_7
+                0x000000ce                __vector_5
+                0x000000ce                __vector_4
+                0x000000ce                __vector_9
+                0x000000ce                __vector_2
+                0x000000ce                __vector_15
+                0x000000ce                __vector_14
+                0x000000ce                __vector_10
+                0x000000ce                __vector_16
+                0x000000ce                __vector_18
+ .text          0x000000d0      0x276 at24cxxx.o
+                0x000000d0                twi_init
+                0x000000d8                ee24cxxx_write_page
+                0x000001c4                ee24cxxx_write_bytes
+                0x0000021e                ee24cxxx_read_bytes
+ .text          0x00000346       0xce i2cmaster/i2cmaster.o
+                0x00000356                i2c_init
+                0x00000360                i2c_start
+                0x00000368                i2c_rep_start
+                0x0000037c                i2c_start_wait
+                0x00000390                i2c_stop
+                0x000003a0                i2c_write
+                0x000003d8                i2c_readNak
+                0x000003dc                i2c_readAck
+                0x000003de                i2c_read
+ .text          0x00000414       0x12 Memory/I2cMemory.o
+                0x00000414                writePage64
+ .text          0x00000426       0xdc Model/Factory.o
+                0x00000426                Factory
+                0x000004f8                Analyser
+ .text          0x00000502      0x358 Model/IOmodel.o
+                0x00000502                timer1_init
+                0x00000510                __vector_8
+                0x00000538                makeNullArray
+                0x00000550                framesAmount
+                0x00000584                _doMath
+                0x000005dc                sequentialReadEeprom
+                0x00000676                sequentialWriteToEeprom
+                0x000006f2                print64bytes
+                0x00000780                serviceOutPut
+                0x00000856                prefixData
+                0x00000858                sendExtEepromDataToHost
+ .text          0x0000085a        0x0 oddebug.o
+ .text          0x0000085a      0x17e uart.o
+                0x0000085a                __vector_11
+                0x000008ac                __vector_12
+                0x000008f6                uart_init
+                0x0000091e                uart_getc
+                0x00000954                uart_putc
+                0x00000976                uart_puts
+                0x0000099c                uart_puts_p
+                0x000009b6                uart_available
+                0x000009ce                uart_flush
+ .text          0x000009d8        0x0 UartTests/UartBlock.o
+ .text          0x000009d8      0x2c4 usbdrv.o
+                0x000009d8                usbSetInterrupt
+                0x00000a24                usbPoll
+                0x00000c82                usbInit
+ .text          0x00000c9c      0x2ea usbdrvasm.o
+                0x00000c9c                usbCrc16
+                0x00000cc6                usbCrc16Append
+                0x00000cce                __vector_1
+ .text          0x00000f86      0x17a usbStorage.o
+                0x00000f86                usbFunctionRead
+                0x00001000                usbFunctionWrite
+                0x00001062                usbFunctionSetup
+                0x0000109c                main
+ .text          0x00001100        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
+ .text          0x00001100        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
+ .text          0x00001100        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
+ .text          0x00001100        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
+ .text          0x00001100        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
+                0x00001100                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x00000dd8       0x28 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
-                0x00000dd8                __udivmodhi4
- .text.libgcc   0x00000e00       0x26 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
-                0x00000e00                _div
-                0x00000e00                __divmodhi4
- .text.libgcc   0x00000e26        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
- .text.libgcc   0x00000e26        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
- .text.libgcc   0x00000e26        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
-                0x00000e26                . = ALIGN (0x2)
+ .text.libgcc   0x00001100       0x28 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
+                0x00001100                __udivmodhi4
+ .text.libgcc   0x00001128       0x26 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
+                0x00001128                _div
+                0x00001128                __divmodhi4
+ .text.libgcc   0x0000114e        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
+ .text.libgcc   0x0000114e        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000114e        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
+                0x0000114e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000e26        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
-                0x00000e26                _exit
-                0x00000e26                exit
+ .fini9         0x0000114e        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
+                0x0000114e                _exit
+                0x0000114e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -311,86 +321,88 @@ LOAD c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/av
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000e26        0x4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
+ .fini0         0x0000114e        0x4 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000e2a                _etext = .
+                0x00001152                _etext = .
 
-.data           0x00800060        0x4 load address 0x00000e2a
+.data           0x00800060        0x2 load address 0x00001152
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800060        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
  .data          0x00800060        0x0 at24cxxx.o
  .data          0x00800060        0x0 i2cmaster/i2cmaster.o
  .data          0x00800060        0x0 Memory/I2cMemory.o
- .data          0x00800060        0x1 Model/IOmodel.o
-                0x00800060                isIdentificationProceed
- .data          0x00800061        0x0 oddebug.o
- .data          0x00800061        0x0 uart.o
- .data          0x00800061        0x0 UartTests/UartBlock.o
- .data          0x00800061        0x2 usbdrv.o
-                0x00800061                usbTxLen
- .data          0x00800063        0x0 usbdrvasm.o
- .data          0x00800063        0x0 usbStorage.o
- .data          0x00800063        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
- .data          0x00800063        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
- .data          0x00800063        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
- .data          0x00800063        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
- .data          0x00800063        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
+ .data          0x00800060        0x0 Model/Factory.o
+ .data          0x00800060        0x0 Model/IOmodel.o
+ .data          0x00800060        0x0 oddebug.o
+ .data          0x00800060        0x0 uart.o
+ .data          0x00800060        0x0 UartTests/UartBlock.o
+ .data          0x00800060        0x2 usbdrv.o
+                0x00800060                usbTxLen
+ .data          0x00800062        0x0 usbdrvasm.o
+ .data          0x00800062        0x0 usbStorage.o
+ .data          0x00800062        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
+ .data          0x00800062        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
+ .data          0x00800062        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
+ .data          0x00800062        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
+ .data          0x00800062        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
  *(.data*)
  *(.rodata)
  *(.rodata*)
  *(.gnu.linkonce.d*)
-                0x00800064                . = ALIGN (0x2)
- *fill*         0x00800063        0x1 00
-                0x00800064                _edata = .
-                0x00800064                PROVIDE (__data_end, .)
+                0x00800062                . = ALIGN (0x2)
+                0x00800062                _edata = .
+                0x00800062                PROVIDE (__data_end, .)
 
-.bss            0x00800064       0x93
-                0x00800064                PROVIDE (__bss_start, .)
+.bss            0x00800062       0xd4
+                0x00800062                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00800064        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
- .bss           0x00800064        0x0 at24cxxx.o
- .bss           0x00800064        0x0 i2cmaster/i2cmaster.o
- .bss           0x00800064        0x0 Memory/I2cMemory.o
- .bss           0x00800064        0x0 Model/IOmodel.o
- .bss           0x00800064        0x0 oddebug.o
- .bss           0x00800064       0x45 uart.o
- .bss           0x008000a9        0x0 UartTests/UartBlock.o
- .bss           0x008000a9        0x1 usbdrv.o
- .bss           0x008000aa        0x0 usbdrvasm.o
- .bss           0x008000aa       0x16 usbStorage.o
-                0x008000aa                hostOrder
- .bss           0x008000c0        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
- .bss           0x008000c0        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
- .bss           0x008000c0        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
- .bss           0x008000c0        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
- .bss           0x008000c0        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
+ .bss           0x00800062        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/../../../../avr/lib/avr4/crtm8.o
+ .bss           0x00800062        0x0 at24cxxx.o
+ .bss           0x00800062        0x0 i2cmaster/i2cmaster.o
+ .bss           0x00800062        0x0 Memory/I2cMemory.o
+ .bss           0x00800062        0x0 Model/Factory.o
+ .bss           0x00800062        0x0 Model/IOmodel.o
+ .bss           0x00800062        0x0 oddebug.o
+ .bss           0x00800062       0x45 uart.o
+ .bss           0x008000a7        0x0 UartTests/UartBlock.o
+ .bss           0x008000a7        0x1 usbdrv.o
+ .bss           0x008000a8        0x0 usbdrvasm.o
+ .bss           0x008000a8        0xe usbStorage.o
+                0x008000a8                hostOrder
+ .bss           0x008000b6        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_udivmodhi4.o)
+ .bss           0x008000b6        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_divmodhi4.o)
+ .bss           0x008000b6        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_exit.o)
+ .bss           0x008000b6        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_copy_data.o)
+ .bss           0x008000b6        0x0 c:/program files (x86)/atmel/avr studio 5.0/avr toolchain/bin/../lib/gcc/avr/4.5.1/avr4\libgcc.a(_clear_bss.o)
  *(.bss*)
  *(COMMON)
- COMMON         0x008000c0        0x1 at24cxxx.o
-                0x008000c0                twst
- COMMON         0x008000c1       0x36 usbdrv.o
-                0x008000c1                usbTxBuf
-                0x008000cc                usbTxStatus1
-                0x008000d8                usbDeviceAddr
-                0x008000d9                usbRxToken
-                0x008000da                usbInputBufOffset
-                0x008000db                usbMsgPtr
-                0x008000dd                usbRxLen
-                0x008000de                usbNewDeviceAddr
-                0x008000df                usbCurrentTok
-                0x008000e0                usbConfiguration
-                0x008000e1                usbRxBuf
-                0x008000f7                PROVIDE (__bss_end, .)
-                0x00000e2a                __data_load_start = LOADADDR (.data)
-                0x00000e2e                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008000b6        0x1 at24cxxx.o
+                0x008000b6                twst
+ COMMON         0x008000b7       0x49 Model/Factory.o
+                0x008000b7                HostSlaveIntr
+ COMMON         0x00800100       0x36 usbdrv.o
+                0x00800100                usbTxBuf
+                0x0080010b                usbTxStatus1
+                0x00800117                usbDeviceAddr
+                0x00800118                usbRxToken
+                0x00800119                usbInputBufOffset
+                0x0080011a                usbMsgPtr
+                0x0080011c                usbRxLen
+                0x0080011d                usbNewDeviceAddr
+                0x0080011e                usbCurrentTok
+                0x0080011f                usbConfiguration
+                0x00800120                usbRxBuf
+                0x00800136                PROVIDE (__bss_end, .)
+                0x00001152                __data_load_start = LOADADDR (.data)
+                0x00001154                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008000f7        0x0
-                0x008000f7                PROVIDE (__noinit_start, .)
+.noinit         0x00800136        0x0
+                0x00800136                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x008000f7                PROVIDE (__noinit_end, .)
-                0x008000f7                _end = .
-                0x008000f7                PROVIDE (__heap_start, .)
+                0x00800136                PROVIDE (__noinit_end, .)
+                0x00800136                _end = .
+                0x00800136                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)

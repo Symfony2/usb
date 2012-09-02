@@ -1,5 +1,5 @@
 Model/IOmodel.d Model/IOmodel.o: ../Model/IOmodel.c \
- ../Model/../Model/IOmodel.h \
+ ../Model/../Model/IOmodel.h ../Model/../Model/../GlobalVariables.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/io.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/sfr_defs.h \
  c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/inttypes.h \
@@ -22,6 +22,8 @@ Model/IOmodel.d Model/IOmodel.o: ../Model/IOmodel.c \
  ../Model/../oddebug.h
 
 ../Model/../Model/IOmodel.h:
+
+../Model/../Model/../GlobalVariables.h:
 
 c:\program\ files\ (x86)\atmel\avr\ studio\ 5.0\avr\ toolchain\bin\../lib/gcc/avr/4.5.1/../../../../avr/include/avr/io.h:
 

@@ -50,6 +50,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../at24cxxx.c \
 ../Memory/I2cMemory.c \
+../Model/Factory.c \
 ../Model/IOmodel.c \
 ../oddebug.c \
 ../uart.c \
@@ -70,6 +71,7 @@ OBJS +=  \
 at24cxxx.o \
 i2cmaster/i2cmaster.o \
 Memory/I2cMemory.o \
+Model/Factory.o \
 Model/IOmodel.o \
 oddebug.o \
 uart.o \
@@ -83,6 +85,7 @@ OBJS_AS_ARGS +=  \
 at24cxxx.o \
 i2cmaster/i2cmaster.o \
 Memory/I2cMemory.o \
+Model/Factory.o \
 Model/IOmodel.o \
 oddebug.o \
 uart.o \
@@ -95,6 +98,7 @@ usbStorage.o
 C_DEPS +=  \
 at24cxxx.d \
 Memory/I2cMemory.d \
+Model/Factory.d \
 Model/IOmodel.d \
 oddebug.d \
 uart.d \
@@ -106,6 +110,7 @@ usbStorage.d
 C_DEPS_AS_ARGS +=  \
 at24cxxx.d \
 Memory/I2cMemory.d \
+Model/Factory.d \
 Model/IOmodel.d \
 oddebug.d \
 uart.d \
@@ -141,6 +146,8 @@ ADDITIONAL_DEPENDENCIES:= $(HEX_FLASH_FILE_PATH) $(LSS_FILE_PATH) $(HEX_EEPROM_F
 OUTPUT_FILE_DEP:= ./makedep.mk
 
 # AVR/GNU C Compiler
+
+
 
 
 

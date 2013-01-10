@@ -22,18 +22,9 @@ OBJS_AS_ARGS :=
 C_DEPS := 
 C_DEPS_AS_ARGS := 
 EXECUTABLES := 
-LIB_AS_ARGS :=
 OUTPUT_FILE_PATH :=
 OUTPUT_FILE_PATH_AS_ARGS :=
-HEX_FLASH_FILE_PATH :=
-HEX_FLASH_FILE_PATH_AS_ARGS :=
-HEX_EEPROM_FILE_PATH :=
-HEX_EEPROM_FILE_PATH_AS_ARGS :=
-LSS_FILE_PATH :=
-LSS_FILE_PATH_AS_ARGS :=
-MAP_FILE_PATH :=
-MAP_FILE_PATH_AS_ARGS :=
-AVR_APP_PATH :=C:/Program Files (x86)/Atmel/AVR Studio 5.0/AVR ToolChain/bin/
+AVR_APP_PATH :=$$$AVR_APP_PATH$$$
 QUOTE := "
 ADDITIONAL_DEPENDENCIES:=
 OUTPUT_FILE_DEP:=
@@ -50,6 +41,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../at24cxxx.c \
 ../Memory/I2cMemory.c \
+../Model/Factory.c \
 ../Model/IOmodel.c \
 ../oddebug.c \
 ../uart.c \
@@ -70,6 +62,7 @@ OBJS +=  \
 at24cxxx.o \
 i2cmaster/i2cmaster.o \
 Memory/I2cMemory.o \
+Model/Factory.o \
 Model/IOmodel.o \
 oddebug.o \
 uart.o \
@@ -83,6 +76,7 @@ OBJS_AS_ARGS +=  \
 at24cxxx.o \
 i2cmaster/i2cmaster.o \
 Memory/I2cMemory.o \
+Model/Factory.o \
 Model/IOmodel.o \
 oddebug.o \
 uart.o \
@@ -95,6 +89,7 @@ usbStorage.o
 C_DEPS +=  \
 at24cxxx.d \
 Memory/I2cMemory.d \
+Model/Factory.d \
 Model/IOmodel.d \
 oddebug.d \
 uart.d \
@@ -106,6 +101,7 @@ usbStorage.d
 C_DEPS_AS_ARGS +=  \
 at24cxxx.d \
 Memory/I2cMemory.d \
+Model/Factory.d \
 Model/IOmodel.d \
 oddebug.d \
 uart.d \
@@ -118,29 +114,13 @@ OUTPUT_FILE_PATH +=usbStorage.elf
 
 OUTPUT_FILE_PATH_AS_ARGS +=usbStorage.elf
 
-HEX_FLASH_FILE_PATH +=usbStorage.hex
-
-HEX_FLASH_FILE_PATH_AS_ARGS +=usbStorage.hex
-
-HEX_EEPROM_FILE_PATH +=usbStorage.eep
-
-HEX_EEPROM_FILE_PATH_AS_ARGS +=usbStorage.eep
-
-LSS_FILE_PATH +=usbStorage.lss
-
-LSS_FILE_PATH_AS_ARGS +=usbStorage.lss
-
-MAP_FILE_PATH =usbStorage.map
-
-MAP_FILE_PATH_AS_ARGS =usbStorage.map
-
-LIB_AS_ARGS +=libusbStorage.a
-
-ADDITIONAL_DEPENDENCIES:= $(HEX_FLASH_FILE_PATH) $(LSS_FILE_PATH) $(HEX_EEPROM_FILE_PATH) size
+ADDITIONAL_DEPENDENCIES:=
 
 OUTPUT_FILE_DEP:= ./makedep.mk
 
-# AVR/GNU C Compiler
+# AVR32/GNU C Compiler
+
+
 
 
 
@@ -161,41 +141,57 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99  -mmcu=atmega8   -MD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o"$@" "$<"
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE)  -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"  -mmcu=atmega8  -o"$@" "$<" 
 	@echo Finished building: $<
 
 Memory/%.o: ../Memory/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99  -mmcu=atmega8   -MD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o"$@" "$<"
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE)  -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"  -mmcu=atmega8  -o"$@" "$<" 
 	@echo Finished building: $<
 
 Model/%.o: ../Model/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99  -mmcu=atmega8   -MD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o"$@" "$<"
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE)  -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"  -mmcu=atmega8  -o"$@" "$<" 
 	@echo Finished building: $<
 
 UartTests/%.o: ../UartTests/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99  -mmcu=atmega8   -MD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o"$@" "$<"
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE)  -funsigned-char -funsigned-bitfields -O0 -fpack-struct -fshort-enums -g2 -Wall -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)"  -mmcu=atmega8  -o"$@" "$<" 
 	@echo Finished building: $<
 
 
 
-# AVR/GNU Assembler
+# AVR32/GNU Preprocessing Assembler
+
+
+
+# AVR32/GNU Assembler
+i2cmaster/i2cmaster.o: ../i2cmaster/i2cmaster.s
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Assembler
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c  -mmcu=atmega8   -o"$@" "$<"
+	@echo Finished building: $<
+
+./usbdrvasm.o: .././usbdrvasm.s
+	@echo Building file: $<
+	@echo Invoking: AVR32/GNU C Assembler
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c  -mmcu=atmega8   -o"$@" "$<"
+	@echo Finished building: $<
+
 
 i2cmaster/%.o: ../i2cmaster/%.s
 	@echo Building file: $<
-	@echo Invoking: AVR/GNU Assembler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c  -mmcu=atmega8   -o"$@" "$<"
+	@echo Invoking: AVR32/GNU C Assembler
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c  -mmcu=atmega8   -o"$@" "$<"
 	@echo Finished building: $<
 
 ./%.o: .././%.s
 	@echo Building file: $<
-	@echo Invoking: AVR/GNU Assembler
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c  -mmcu=atmega8   -o"$@" "$<"
+	@echo Invoking: AVR32/GNU C Assembler
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -Wa,-gdwarf2 -x assembler-with-cpp -c  -mmcu=atmega8   -o"$@" "$<"
 	@echo Finished building: $<
 
 
@@ -212,28 +208,22 @@ endif
 # All Target
 all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 
-# AVR/GNU C/C++ Linker
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP)
 	@echo Building target: $@
-	@echo Invoking: AVR/GNU C/C++ Linker
-	$(QUOTE)$(AVR_APP_PATH)avr-gcc.exe$(QUOTE)  -mmcu=atmega8  -Wl,-Map=$(MAP_FILE_PATH_AS_ARGS) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS)
+	@echo Invoking: AVR/GNU C Linker
+	$(QUOTE)C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="usbStorage.map" -Wl,-lm   -mmcu=atmega8  
 	@echo Finished building target: $@
+	"C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "usbStorage.elf" "usbStorage.hex"
+	"C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "usbStorage.elf" "usbStorage.eep" || exit 0
+	"C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-objdump.exe" -h -S "usbStorage.elf" > "usbStorage.lss"
+	"C:\Program Files (x86)\Atmel\AVR Studio 5.1\extensions\Atmel\AVRGCC\3.3.1.27\AVRToolchain\bin\avr-size.exe" -C --mcu=atmega8  "usbStorage.elf"
+	
 
 
 
-$(HEX_FLASH_FILE_PATH): $(OUTPUT_FILE_PATH)
-	$(QUOTE)$(AVR_APP_PATH)avr-objcopy.exe$(QUOTE) -O ihex -R .eeprom -R .fuse -R .lock -R .signature  $(QUOTE)$<$(QUOTE) $(QUOTE)$@$(QUOTE)
-
-$(HEX_EEPROM_FILE_PATH): $(OUTPUT_FILE_PATH)
-	-$(QUOTE)$(AVR_APP_PATH)avr-objcopy.exe$(QUOTE) -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O ihex $(QUOTE)$<$(QUOTE) $(QUOTE)$@$(QUOTE) || exit 0
-
-$(LSS_FILE_PATH): $(OUTPUT_FILE_PATH)
-	$(QUOTE)$(AVR_APP_PATH)avr-objdump.exe$(QUOTE) -h -S $(QUOTE)$<$(QUOTE) > $(QUOTE)$@$(QUOTE)
-
-size: $(OUTPUT_FILE_PATH)
-	@$(QUOTE)$(AVR_APP_PATH)avr-size.exe$(QUOTE) -C --mcu=atmega8 $(OUTPUT_FILE_PATH_AS_ARGS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS_AS_ARGS)$(C_DEPS_AS_ARGS) $(EXECUTABLES) $(LIB_AS_ARGS) $(HEX_FLASH_FILE_PATH_AS_ARGS) $(HEX_EEPROM_FILE_PATH_AS_ARGS) $(LSS_FILE_PATH_AS_ARGS) $(MAP_FILE_PATH_AS_ARGS)
-
+	-$(RM) $(OBJS_AS_ARGS)$(C_DEPS_AS_ARGS) $(EXECUTABLES) 
+	rm -rf "usbStorage.hex" "usbStorage.lss" "usbStorage.eep" "usbStorage.map"
+	

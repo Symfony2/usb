@@ -16,6 +16,8 @@ unsigned char Factory(	unsigned char *recivedArray,
 				unsigned char *currentAddress,
 				unsigned char *bytesRemaining,
 				struct HostInteraction *fillStruct);
+				
+void Analyser(struct HostInteraction *fillStruct);
 
 
 #endif /* FACTORY_H_ */

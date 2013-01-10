@@ -19,29 +19,40 @@
 #define writeKey              0x0d
 
 /*Report types*/
-#define SET_FEATURE 3
-#define GET_FEATURE 3
+#define DATA_ARRAY_LENGHT 56
 
-#define SET_INPUT  2
-#define GET_OUTPUT 1
 
 #define EXTERNAL_EEPROM_SIZE 0x8000
 #define FRAME_LENGHT 8
 
 
-void timer1_init(void);
+void timers_init(void);
 
-ISR(TIMER1_OVF_vect );
+//ISR(TIMER1_OVF_vect );
 
 void makeNullArray(unsigned char* dataArray, unsigned int lenght, unsigned char defaultValue);
 
-void sequentialReadEeprom(void);
+unsigned int Crc16_clc( unsigned char *Data, unsigned int DataLen);
 
-void sequentialWriteToEeprom(struct HostInteraction *dataStructure, unsigned char dataLenghtPerOneFrame);
+void sequentialWriteToEeprom(struct HostInteraction *dataStructure);
 
-void serviceOutPut(unsigned int *array);
+void consequentiallyOutPutFramesToHost(struct HostInteraction *dataStructure);
 
+void partialOutPutToHost(struct HostInteraction *dataStructure);
 
+//void serviceOutPut(unsigned int *array, unsigned int lenght);
+
+void eraseExternalEeprom(struct HostInteraction *dataStructure);
+
+void idenProc(struct HostInteraction *dataStructure);
+
+void writeMD5(struct HostInteraction *dataStructure);
+
+void uAcknowledgeToHost(unsigned char commandNumber,unsigned char commType);
+
+void eraseMD5keys(struct HostInteraction *dataStructure);
+
+//void print64bytes(unsigned char *array);
 
 
 #endif /* IOMODEL_H_ */

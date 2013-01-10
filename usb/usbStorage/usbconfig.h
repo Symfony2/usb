@@ -193,8 +193,8 @@
     доменное имя Internet, если Вы используете свободно распространяемую пару 
     obdev VID/PID. За деталями обращайтесь к файлу USBID-License.txt.
  */
-#define USB_CFG_DEVICE_NAME     'T', 'o', 'k', 'e', 'n'
-#define USB_CFG_DEVICE_NAME_LEN 5
+#define USB_CFG_DEVICE_NAME     'K', 'G', '-', 'T', 'o', 'k', 'e', 'n'
+#define USB_CFG_DEVICE_NAME_LEN 8
 /* Здесь указывается имя устройства (device name) таким же способом, как и в предыдущем 
     параметре указывается имя вендора. Если Вам не нужно имя устройства, закомментируйте
     этот макрос. См. файл USBID-License.txt перед назначением имени, если Вы используете 

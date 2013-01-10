@@ -8,6 +8,8 @@ i2cmaster\i2cmaster.S
 
 Memory\I2cMemory.c
 
+Model\Factory.c
+
 Model\IOmodel.c
 
 oddebug.c

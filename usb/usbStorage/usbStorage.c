@@ -120,6 +120,7 @@ uchar   usbFunctionRead(uchar *data, uchar len)
 
 uchar usbFunctionWrite (uchar *data, uchar len)
 {
+/*
 	uchar i;
 	if (len > bytesRemaining) len = bytesRemaining;
 	
@@ -132,16 +133,16 @@ uchar usbFunctionWrite (uchar *data, uchar len)
 	
 	  
 	if(bytesRemaining == 0){
-		HostSlaveIntr.DataRecived = 1;
+		HostSlaveIntr.FrameRecived = 1;
 		HostSlaveIntr.OperationType = 0;
 		passBy=1;
 	}
 	else
-		HostSlaveIntr.DataRecived = 0;
+		HostSlaveIntr.FrameRecived = 0;
 	
 	
-	return bytesRemaining == 0;  // return 1 when done	
-	//return Factory(data, len, &currentAddress, &bytesRemaining, &HostSlaveIntr);
+	return bytesRemaining == 0;  // return 1 when done	*/
+	return Factory(data, len, &currentAddress, &bytesRemaining, &HostSlaveIntr);
 }
 
 
@@ -183,6 +184,23 @@ usbMsgLen_t usbFunctionSetup (uchar *data)
     return 0;
 }
 
+/***Метод который выполняеться один раз при запуске контроллера которая ****//****
+производит проверку встроенную область памяти на содержание в ней ключей. В случае ****//****
+не обнаружения разрешает идентификацию нового пользователя. В противном случае запрещяет идентификацию***/
+void revisorLocalEeprom(){
+	unsigned char amountOfUsers = 0;
+	amountOfUsers = eeprom_read_byte(0);
+	if(amountOfUsers == 0xFF){
+		eeprom_write_byte(0,0);
+		amountOfUsers = 0;
+	}
+	if(amountOfUsers!=0)
+		HostSlaveIntr.isIdentificationProceed = 0;		
+	else
+		HostSlaveIntr.isIdentificationProceed = 1;		
+}
+
+
 /* ------------------------------------------------------------------------- */
 //unsigned char transferData[] = {4,4,4,4,4,3,3,4};
 
@@ -193,9 +211,9 @@ usbMsgLen_t usbFunctionSetup (uchar *data)
 	 
 	 DDRB = 0b00000011;
      
-	 timer1_init();
-	 TIMSK  = 0x00;          /*timers interrupt enable*/
-	 //TIMSK  = 0x04;
+	 timers_init();
+	 //TIMSK  = 0x00;          /*timers interrupt enable*/
+	 TIMSK  = 0x05;;
 	 twi_init();
 	 wdt_enable(WDTO_2S);
 
@@ -210,50 +228,20 @@ usbMsgLen_t usbFunctionSetup (uchar *data)
     }
     
     usbDeviceConnect();   
-	 sei();
-	 //ee24cxxx_write_bytes(16,sizeof(transferData),transferData);	 
-	 //ee24cxxx_read_bytes(0,64,local); 
-	 HostSlaveIntr.isIdentificationProceed = 1;
+	 sei(); 
+	 
+	 
+	 
+	 revisorLocalEeprom();
+	 
 	 for(;;){
+		 
 		wdt_reset();
 		usbPoll();
-		
-		/*if(HostSlaveIntr.DataRecived){
-			
-			HostSlaveIntr.DataRecived=0;
-			HostSlaveIntr.OperationType = readAllowExtEeprom;			
-			serviceOutPut(HostSlaveIntr.buffer);			
-		}*/
-		
-		if(passBy){
-			passBy=0;
-			inbuff[0] = checkPoint;
-			serviceOutPut(inbuff);
-			checkPoint = 0;
-		}
-		
 				
 	 }		
  }
-/*
-unsigned char transferData[12] = {8,1,2,3,4,5,6,7,8};
 
-int main(void)
-{
-	uart_init(UART_BAUD_SELECT(9600, F_CPU));
-	DDRB = 0b00000010;	
-	
-	uart_puts(transferData);
-	
-	writePage64(transferData);
-	
-	sei();
-    while(1)
-    {
-		
-        //TODO:: Please write your application code 
-    }
-}*/
 
 
 
